@@ -1,0 +1,38 @@
+﻿
+@model ProductManagement.Models.Product
+
+<li class="span3">
+	<div class="thumbnail">
+        <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@Model.Id"><img src="~/themes/images/products/@Model.ImagePath" alt="" /></a>
+		<div class="caption">
+
+		    <h5>@Model.Name</h5>
+			    <p>
+				    @(Model?.Description?.Substring(0,30) + "...")
+			    </p>
+
+	        <h4 style="text-align:center">
+                <a class="btn" asp-controller="Product" asp-action="ProductDetails" asp-route-id="@Model?.Id">
+                    <i class="icon-zoom-in"></i>
+                </a> 
+                @*   <a class="btn" href="@Url.RouteUrl("addcart", new { productId = Model?.Id })">
+                    Add to <i class="icon-shopping-cart"></i>
+                </a>  *@
+
+                <a class="btn" onclick="addToCart(@Model?.Id)">Add to <i class="icon-shopping-cart"></i></a>
+
+                <a class="btn btn-primary" href="#">@Model?.Price?.ToString("C2")</a>
+            </h4>
+		</div>
+	</div>
+</li>
+
+
+
+ 
+    
+
+   
+
+
+

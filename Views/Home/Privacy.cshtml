@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+@model List<ProductManagement.Models.Category>
+<ul>
+@foreach(var cate in Model)
+{
+    <li>@cate.Name</li>
+}
+</ul>
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>

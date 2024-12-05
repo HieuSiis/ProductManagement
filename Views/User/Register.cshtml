@@ -1,0 +1,117 @@
+﻿
+@model RegisterViewModel
+
+<div class="span9">
+	<ul class="breadcrumb">
+		<li><a asp-controller="Home" asp-action="Index">Home</a> <span class="divider">/</span></li>
+		<li><a asp-controller="User" asp-action="Login">Login</a> <span class="divider">/</span></li>
+		<li class="active">Registration</li>
+	</ul>
+	<h3> Registration</h3>
+	<hr class="soft" />
+
+	<div class="well">
+		<!--
+		<div class="alert alert-info fade in">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+		 </div>
+		<div class="alert fade in">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+		 </div>
+		 <div class="alert alert-block alert-error fade in">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+		 </div> -->
+		<form class="form-horizontal" id="registerForm" asp-route-returnUrl="" method="post">
+			<h4>Your personal information</h4>
+			<hr />
+
+			<div asp-validation-summary="ModelOnly" class="alert alert-block alert-error fade in">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				@* <strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s *@
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="inputFname">First name <sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="FirstName" type="text" id="inputFname" placeholder="First Name"> 
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Your given name (e.g., John)</span> <br />
+					<span asp-validation-for="FirstName" style="color: crimson"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputLnam">Last name <sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="LastName" type="text" id="inputLnam" placeholder="Last Name"> 
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Your family name or surname (e.g., Smith)</span> <br />
+					<span asp-validation-for="LastName" style="color: crimson"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="address">Address<sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="Address" type="text" id="address" placeholder="Adress" /> 
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Street address, District, City, Country, etc.</span> <br />
+					<span asp-validation-for="Address" style="color: crimson"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="phonenumber">Phone Number <sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="PhoneNumber" type="text" id="phonenumber" placeholder="Phone Number" /> 
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Enter a valid phone number (e.g., +1 234 567 890)</span> <br />
+					<span asp-validation-for="PhoneNumber" style="color: crimson"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="username">User Name <sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="UserName" type="text" id="username" placeholder="User Name" autocomplete="username" aria-required="true">
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Choose a unique username for your account</span> <br />
+					<span asp-validation-for="UserName" style="color: crimson"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label asp-for="Email" class="control-label" for="input_email">Email <sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="Email" type="text" id="input_email" placeholder="Email" autocomplete="email" aria-required="true">
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Enter your active email address (e.g., example@email.com)</span> <br />
+					<span asp-validation-for="Email" style="color: crimson"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Password <sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="Password" type="password" id="inputPassword" placeholder="Password" autocomplete="inputPassword" aria-required="true">
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Create a secure password with at least 6 characters</span> <br />
+					<span asp-validation-for="Password" style="color: crimson"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label asp-for="ConfirmPassword" class="control-label" for="inputConfirmPassword">Confirm Password <sup>*</sup></label>
+				<div class="controls">
+					<input asp-for="ConfirmPassword" type="password" id="inputConfirmPassword" placeholder="Confirm Password"> 
+					<span style="margin-left: 10px; color: #6c757d; font-size: 0.9em;">Re-enter your password to confirm it</span> <br />
+					<span asp-validation-for="ConfirmPassword" style="color: crimson"></span>
+				</div>
+			</div>
+
+			<br />
+
+			<div class="control-group">
+				<div class="controls">
+					@* <input type="hidden" name="email_create" value="1">
+					<input type="hidden" name="is_new_customer" value="1"> *@
+					<input id="registerSubmit" class="btn btn-large btn-success" type="submit" value="Register" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

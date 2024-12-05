@@ -1,0 +1,98 @@
+﻿@model List<ProductManagement.Models.CartItem>
+@* @model CartWithLoginViewModel *@
+
+@using Microsoft.AspNetCore.Identity
+@using ProductManagement.AppData
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@if (TempData["LoginCartMessage"] != null)
+{
+	<div class="alert alert-block alert-success fade in" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 300px;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Success!</strong> @TempData["LoginCartMessage"]
+	</div>
+}
+
+<div class="span9">
+
+	<div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050; width: 300px;"></div>
+
+	<ul class="breadcrumb">
+		<li><a asp-controller="Home" asp-action="Index">Home</a> <span class="divider">/</span></li>
+		<li class="active"> SHOPPING CART</li>
+	</ul>
+	<h3>  SHOPPING CART [ <small><span id="cart-count-cart">@await Html.PartialAsync("_CartCountPartial")</span> Item(s) </small> ]<a onclick="goBack()" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
+	<hr class="soft" />
+
+	@if (!SignInManager.IsSignedIn(User))
+	{
+		//@await Html.PartialAsync("_LoginCartPartial")
+		@await Html.PartialAsync("_LoginCartPartial", new LoginUsernameViewModel())
+	}
+
+	<div id="cart-table-non-reload"></div>
+	@if (Model.Count > 0)
+	{
+		@await Html.PartialAsync("_CartTablePartial", Model)
+	}
+	else
+	{
+		<div class="alert alert-block alert-info fade in cart-empty">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong>Information!</strong> Empty. No products have been added to the cart.
+		</div>
+	}
+
+	@* <table class="table table-bordered">
+		<tbody>
+			<tr>
+				<td>
+					<form class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
+							<div class="controls">
+								<input type="text" class="input-medium" placeholder="CODE">
+								<button type="submit" class="btn"> ADD </button>
+							</div>
+						</div>
+					</form>
+				</td>
+			</tr>
+
+		</tbody>
+	</table>
+
+	<table class="table table-bordered">
+		<tr><th>ESTIMATE YOUR SHIPPING </th></tr>
+		<tr>
+			<td>
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="inputCountry">Country </label>
+						<div class="controls">
+							<input type="text" id="inputCountry" placeholder="Country">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputPost">Post Code/ Zipcode </label>
+						<div class="controls">
+							<input type="text" id="inputPost" placeholder="Postcode">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn">ESTIMATE </button>
+						</div>
+					</div>
+				</form>
+			</td>
+		</tr>
+	</table> *@
+
+
+	<a onclick="goBack()" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+	<a href="#" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+
+</div>

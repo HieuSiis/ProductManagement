@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var session = HttpContextAccessor?.HttpContext?.Session;
+    string? jsoncart = session?.GetString(ProductManagement.Controllers.ProductController.CARTKEY);
+
+    decimal? grandTotal = 0; 
+
+    if (jsoncart != null)
+    {
+        var cartItems = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart); // Deserialize the cart JSON
+        foreach (var item in cartItems)
+        {
+            if (item?.product != null)
+            {
+                decimal? itemPriceCol = item.quantity * item.product.Price;
+                decimal? itemDiscountCol = itemPriceCol * item.product.Discount;
+                decimal? itemTaxCol = (itemPriceCol - itemDiscountCol) * item.product.Tax;
+                decimal? itemTotalCol = itemPriceCol - itemDiscountCol + itemTaxCol;
+
+                grandTotal += itemTotalCol; // Calculate grand total
+            }
+        }
+    }
+
+    <span>@grandTotal?.ToString("C2")</span>
+}

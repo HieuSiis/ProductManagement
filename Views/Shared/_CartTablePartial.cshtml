@@ -1,0 +1,89 @@
+﻿@model List<ProductManagement.Models.CartItem>
+
+@{
+    decimal? priceTotal = 0;
+    decimal? discountTotal = 0;
+    decimal? taxTotal = 0;
+    decimal? grandTotal = 0;
+}
+
+<table class="table table-bordered" id="cart-table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Description</th>
+            <th>Quantity/Update</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Tax</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var cartItem in Model)
+        {
+            decimal? priceCol = cartItem?.quantity * cartItem?.product?.Price;
+            decimal? discountCol = priceCol * cartItem?.product?.Discount;
+            decimal? taxCol = (priceCol - discountCol) * cartItem?.product?.Tax;
+            decimal? totalCol = (priceCol - discountCol) + taxCol;
+
+            priceTotal += priceCol;
+            discountTotal += discountCol;
+            taxTotal += taxCol;
+            grandTotal += totalCol;
+
+            <tr id="row-@cartItem?.product?.Id">
+                <td>
+                    <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@cartItem?.product?.Id">
+                        <img width="60" src="~/themes/images/products/@cartItem?.product?.ImagePath" alt="" />
+                    </a>
+                </td>
+                <td>
+                    @(cartItem?.product?.Description?.Length > 100
+                        ? cartItem.product.Description.Substring(0, 100) + "..."
+                        : cartItem?.product?.Description)
+                   @*  <br />Color : black, Material : metal</td> *@
+                <td>
+                    <div class="input-append">
+                        <input asp-for="@cartItem.quantity" class="span1" style="max-width:34px" placeholder="1" id="@($"quantity-{cartItem?.product?.Id}")" size="16" type="text">
+                        <button class="btn update-qty-btn" type="button" product-id="@cartItem?.product?.Id">
+                            <i class="icon-minus"></i>
+                        </button>
+                        <button class="btn update-qty-btn" type="button" product-id="@cartItem?.product?.Id">
+                            <i class="icon-plus"></i>
+                        </button>
+                        <button class="btn btn-danger remove-row-btn" type="button" product-id="@cartItem?.product?.Id">
+                            <i class="icon-remove icon-white"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>@priceCol?.ToString("C2")</td>
+                <td>@discountCol?.ToString("C2")</td>
+                <td>@taxCol?.ToString("C2")</td>
+                <td>@totalCol?.ToString("C2")</td>
+            </tr>
+        }
+
+        <tr>
+            <td colspan="6" style="text-align:right">Total Price:</td>
+            <td id="price-total">@priceTotal?.ToString("C2")</td>
+        </tr>
+        <tr>
+            <td colspan="6" style="text-align:right">Total Discount:</td>
+            <td id="discount-total">@discountTotal?.ToString("C2")</td>
+        </tr>
+        <tr>
+            <td colspan="6" style="text-align:right">Total Tax:</td>
+            <td id="tax-total">@taxTotal?.ToString("C2")</td>
+        </tr>
+        <tr>
+            <td id="total-text" colspan="6" style="text-align:right">
+                <strong>TOTAL (@priceTotal?.ToString("C2") - @discountTotal?.ToString("C2") + @taxTotal?.ToString("C2")) =</strong>
+            </td>
+            <td id="grand-total" class="label label-important" style="display:block">
+                <strong>@grandTotal?.ToString("C2")</strong>
+            </td>
+        </tr>
+    </tbody>
+</table>

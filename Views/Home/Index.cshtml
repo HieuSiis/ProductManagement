@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model List<ProductManagement.Models.Product>
+
+@if (TempData["LoginMessage"] != null)
+{
+	<div class="alert alert-block alert-success fade in" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 300px;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Success!</strong> @TempData["LoginMessage"]
+	</div>
+}
+
+@if (TempData["LogoutMessage"] != null)
+{
+	<div class="alert alert-block alert-success fade in" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 300px;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Success!</strong> @TempData["LogoutMessage"]
+	</div>
+}
+
+<div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050; width: 300px;"></div>
+
+<div class="well well-small">
+	<h4>Featured Products <small class="pull-right">@ViewBag.FeaturedCount+ featured products</small></h4>
+	<div class="row-fluid">
+		<div id="featured" class="carousel slide">
+
+			<div class="carousel-inner">
+				@for (int i = 0; i < ViewBag.ProductGroups.Count; i++)
+				{
+					<div class="item @(i == 0 ? "active" : "")">
+						<ul class="thumbnails">
+							@foreach (var product in ViewBag.ProductGroups[i])
+							{
+								<li class="span3">
+									<div class="thumbnail">
+										<i class="tag"></i>
+										<a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id">
+											<img src="~/themes/images/products/@product.ImagePath" alt="">
+										</a>
+										<div class="caption">
+											<h5>@product.Name</h5>
+											<h4>
+												<a class="btn" asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id">VIEW</a>
+												<span class="pull-right">$@product.Price</span>
+											</h4>
+										</div>
+									</div>
+								</li>
+							}
+						</ul>
+					</div>
+				}
+			</div>
+
+			<a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
+			<a class="right carousel-control" href="#featured" data-slide="next">›</a>
+		</div>
+	</div>
+</div>
+
+<h4>Latest Products </h4>
+
+<ul class="thumbnails">
+	@foreach (var product in Model)
+	{
+		@await Html.PartialAsync("_ProductGridPartial", product)
+	}
+</ul>
+
+@section Carousel {
+	<div id="carouselBlk">
+		<div id="myCarousel" class="carousel slide">
+			<div class="carousel-inner">
+				<div class="item active">
+					<div class="container">
+						<a href="register.html"><img style="width:100%" src="~/themes/images/carousel/1.png" alt="special offers" /></a>
+						<div class="carousel-caption">
+							<h4>Second Thumbnail label</h4>
+							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="container">
+						<a href="register.html"><img style="width:100%" src="~/themes/images/carousel/2.png" alt="" /></a>
+						<div class="carousel-caption">
+							<h4>Second Thumbnail label</h4>
+							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="container">
+						<a href="register.html"><img src="~/themes/images/carousel/3.png" alt="" /></a>
+						<div class="carousel-caption">
+							<h4>Second Thumbnail label</h4>
+							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						</div>
+
+					</div>
+				</div>
+				<div class="item">
+					<div class="container">
+						<a href="register.html"><img src="~/themes/images/carousel/4.png" alt="" /></a>
+						<div class="carousel-caption">
+							<h4>Second Thumbnail label</h4>
+							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						</div>
+
+					</div>
+				</div>
+				<div class="item">
+					<div class="container">
+						<a href="register.html"><img src="~/themes/images/carousel/5.png" alt="" /></a>
+						<div class="carousel-caption">
+							<h4>Second Thumbnail label</h4>
+							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="container">
+						<a href="register.html"><img src="~/themes/images/carousel/6.png" alt="" /></a>
+						<div class="carousel-caption">
+							<h4>Second Thumbnail label</h4>
+							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+			<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		</div>
+	</div>
+}

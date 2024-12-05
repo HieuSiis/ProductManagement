@@ -1,0 +1,85 @@
+﻿@model LoginEmailViewModel
+
+@if (TempData["RegisterMessage"] != null)
+{
+	<div class="alert alert-block alert-success fade in" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 300px;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Success!</strong> @TempData["RegisterMessage"]
+	</div>
+}
+
+<div class="span9">
+	<ul class="breadcrumb">
+		<li><a asp-controller="Home" asp-action="Index">Home</a> <span class="divider">/</span></li>
+		<li class="active">Login</li>
+	</ul>
+	<h3> Login</h3>
+	<hr class="soft" />
+
+	<div class="row">
+		<div class="span4">
+			<div class="well">
+				<h5>ALREADY REGISTERED ?</h5>
+
+				<div asp-validation-summary="ModelOnly" class="alert alert-block alert-error fade in">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					@* <strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s *@
+				</div>
+
+				<form method="post">
+					<div class="control-group">
+						<label class="control-label" for="inputEmail1">Email</label>
+						<div class="controls">
+							<input asp-for="Email" class="span3" type="text" id="inputEmail1" placeholder="Email"
+								value="@Context.Request.Cookies["RememberMe_Email"]"> <br />
+							<span asp-validation-for="Email" style="color: crimson"></span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputPassword1">Password</label>
+						<div class="controls">
+							<input asp-for="Password" type="password" class="span3" id="inputPassword1" placeholder="Password"
+								value="@Context.Request.Cookies["RememberMe_Password"]"> <br />
+							<span asp-validation-for="Password" style="color: crimson"></span>
+						</div>
+					</div>
+					<div class="checkbox mt-2">
+						<label asp-for="RememberMe" class="form-label">
+							<input class="form-check-input" asp-for="RememberMe">
+							@Html.DisplayNameFor(m => m.RememberMe)
+						</label>
+					</div>
+					<br />
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn">Sign in</button> <a href="#">Forget password?</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+		<div class="span1"> &nbsp;</div>
+
+		<div class="span4">
+			<div class="well">
+				<h5>CREATE YOUR ACCOUNT</h5>
+				<br />
+
+				<p>Don't have an account? Click the button below to create a new account.</p>
+				<br />
+				<form action="Register" method="get">
+					<div class="controls">
+						<button class="btn block">Create Your Account</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

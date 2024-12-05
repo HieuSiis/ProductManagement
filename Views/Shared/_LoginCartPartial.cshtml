@@ -1,0 +1,46 @@
+﻿@model LoginUsernameViewModel
+
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-block alert-error fade in">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Error!</strong> @TempData["ErrorMessage"]
+	</div>
+}
+
+<table class="table table-bordered" id="tbl-register">
+	<tr><th> I AM ALREADY REGISTERED  </th></tr>
+	<tr>
+		<td>
+			<form class="form-horizontal" method="post" asp-action="CartLogin" asp-controller="User">
+				<div class="control-group">
+					<label class="control-label" for="inputUsername">Username</label>
+					<div class="controls">
+						<input asp-for="UserName" type="text" id="inputUsername" placeholder="Username"> <br />
+						<span asp-validation-for="UserName" style="color: crimson"></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword1">Password</label>
+					<div class="controls">
+						<input asp-for="Password" type="password" id="inputPassword1" placeholder="Password"> <br />
+						<span asp-validation-for="Password" style="color: crimson"></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn">Sign in</button> OR <a asp-controller="User" asp-action="Register" class="btn">Register Now!</a>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<a href="forgetpass.html" style="text-decoration:underline">Forgot password ?</a>
+					</div>
+				</div>
+			</form>
+		</td>
+	</tr>
+</table>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
